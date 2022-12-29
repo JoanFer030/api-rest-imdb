@@ -1,0 +1,36 @@
+{% extends "base.html" %}
+{% block content %}
+<h2 class="center-content">Pruebela</h2>
+<form action="" method="POST" class="api-form">
+    <p class="input-group">
+        <span class="text-api">Introduzca su clave</span>
+        <input type="text" name="api-key" placeholder={{clave}} class="field-api">
+    </p>
+    <p class="input-group">
+        <span class="text-api">{{request.base_url}}api/</span>
+        <input type="text" name="ruta-api" placeholder={{ruta}} class="field-api">
+    </p>
+    <p>
+        <input type="submit" name="prueba-api" value="Request" class="btn-submit">
+    </p>
+</form>
+<h3 class="center-content ">Resultado:</h3>
+<div class="result">
+    <div class="text">
+        {%for l, t in data%}
+            {%if t == 0%}
+                {{l}}<br>
+            {%endif%}
+            {%if t == 1%}
+                &emsp;&emsp;{{l}}<br>
+            {%endif%}
+            {%if t == 2%}
+                &emsp;&emsp;&emsp;&emsp;{{l}}<br>
+            {%endif%}
+            {%if t == 3%}
+                &emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{{l}}<br>
+            {%endif%}
+        {%endfor%}
+    </div>
+</div>
+{% endblock %}

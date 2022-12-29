@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>API REST</title>
+    <link rel="shortcut icon" href={{url_for('static', filename='images/logo.png')}}>
+    <link rel="stylesheet" href={{url_for('static', filename='styles/style.css')}}>
+</head>
+<body>
+    <header>
+        <a href={{url_for('index')}}><img class="logo" src={{url_for('static', filename='images/logo_completo.png')}} alt="logo"></a>
+        <nav>
+            <ul class="nav-links">
+                <li><a href={{url_for('index')}}>Inicio</a></li>
+                <li><a href={{url_for('api_key')}}>Obtener clave</a></li>
+                <li><a href={{url_for('examples')}}>Ejemplos</a></li>
+                <li><a href={{url_for('documentation')}}>Documentación</a></li>
+            </ul>
+        </nav>
+    </header> 
+    <br>
+    {% block content %}
+    {% endblock %}
+    <br>
+    <hr>
+    <div class="footer">
+        <p>
+            <a href={{url_for('admin')}} class="link-text" style="padding: 0px 100px;">Administrador</a>
+            <a href="#" class="link-text" style="padding: 0px 100px;">GitHub</a>
+        </p>
+    </div>
+</body>
+</html>

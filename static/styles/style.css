@@ -1,0 +1,234 @@
+body {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    background-color: #ffffff;
+    font-family: "Consolas";
+}
+
+li, a {
+    font-weight: 700;
+    font-size: 16px;
+    color: #edf0f1;
+    text-decoration: none;
+}
+
+.justify {
+    text-align: justify;
+    font-size: 13px;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 25px 5%;
+    background-color: #57575a;
+}
+
+input {
+    border: 0;
+    outline: none;
+}
+.center-content {
+    margin: 0 auto;
+    width: 60%;
+    padding: 10px;
+}
+
+.logo {
+    cursor: pointer;
+}
+
+.nav-links {
+    list-style: none;
+}
+
+.nav-links li {
+    display: inline-block;
+    padding: 0px 20px;
+}
+
+
+.nav-links li a:hover {
+    color: #0088a9;    
+}
+
+.pag-titulo {
+    padding: 0 20px;
+}
+
+.form-key {
+    margin: 0 auto;
+    width: 70%;
+    height: 300px;
+    padding: 15px;
+    border-radius: 20px;
+    text-align: center;
+    vertical-align: middle;
+    color: #000000;
+}
+
+.field {
+    border: solid 1px #57575a;
+    border-radius: 5px;
+    width: 60%;
+    font-family: "Consolas";
+    font-size: 14px;
+    margin: 20px 25px;
+    height: 36px;
+}
+
+.select-field {
+    border: solid 1px #57575a;
+    border-radius: 5px;
+    width: 200px;
+    padding: 5px;
+    font-family: "Consolas";
+    font-size: 14px;
+    margin: 20px 25px;
+    height: 40px;
+}
+
+.form-key .field:focus {
+    border: solid 2px #0088a9;
+}
+
+.btn-submit {
+    border-radius: 5px;
+    display: inline-block;
+    padding: 10px 0px;
+    text-decoration: none;
+    font-family: "Consolas";
+    font-size: 14px;
+    background-color: #dbd4d4;
+    margin-bottom: 25px;
+    border: solid 1px #57575a;
+    width: 200px;
+}
+
+.btn-submit:hover {
+    background-color: #c9c4c4;
+    border: solid 2px #0088a9;
+}
+
+a.link-text {
+    color: #57575a;
+    font-size: 13px;
+}
+
+a.link-text:hover {
+    color: #0088a9;
+}
+
+.code {
+    padding: 10px 80px;
+}
+
+.code-block {
+    background: #f8f8f8;
+    overflow:auto;
+    width:auto;
+    border:solid gray;
+    border-width:.1em .1em .1em .8em;
+    padding:.2em .6em;
+    font-size: 14px;
+}
+
+.code-block .text {
+    color: #ba2121;
+}
+
+.code-block .module {
+    color: #0000ff;
+    font-weight: bold;
+}
+
+.code-block .function {
+    color: #008000;
+    font-weight: bold;
+}
+
+.code-block .function-cmd {
+    color: #d6900e;
+    font-weight: bold;
+}
+
+.code-block .opt-cmd {
+    color: #ccced4;
+}
+
+.api-form {
+    margin: 0 auto;
+    width: 50%;
+    text-align: center;
+}
+
+.input-group {
+    position: relative;
+    display: table;
+    border-collapse: separate;
+}
+
+.api-form .text-api {
+    padding: 6px;
+    height: 25px;
+    background-color: #c9c4c4;
+    border: solid 1px #57575a;
+    border-radius: 3px 0 0 3px;
+    font-size: 14px;
+    position: relative;
+    width: 1%;
+    white-space: nowrap;
+    vertical-align: middle;
+    margin-bottom: 0;
+    display: table-cell;
+}
+
+.api-form .field-api {
+    padding: 6px;
+    height: 25px;
+    background-color: #c9c4c4;
+    border: solid 1px #57575a;
+    border-radius: 0px 3px 3px 0px;
+    font-family: "Consolas";
+    font-size: 14px;
+    position: relative;
+    z-index: 2;
+    float: left;
+    width: 100%;
+    margin-bottom: 0;
+    display: table-cell;
+    
+}
+
+.field-api:focus {
+    background-color: #c9c4c4;
+    border: solid 2px #0088a9;
+}
+
+.result {
+    margin: 0 auto;
+    width: 50%;
+    background-color: #c9c4c4;
+    padding: 10px;
+    border-radius: 4px;
+}
+
+.result .text {
+    height: 440px;
+    overflow-y: scroll;
+    border: solid 1px #57575a;
+    border-radius: 3px;
+    padding: 5px;
+    background-color: #f8f8f8;
+    line-height: 150%;
+    font-size: 14px;
+}
+
+.footer {
+    font-size: 10px;
+    padding: 5px;
+    text-align: center;
+    justify-content: space-between;
+}

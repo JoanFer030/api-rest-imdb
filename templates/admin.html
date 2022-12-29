@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="pag-titulo">
+    <img src={{url_for('static', filename='images/key.png')}} alt="key">
+    Administrador
+</h1>
+<div>
+    <form action="" method="POST" class="form-key" style="height: 375px;">
+        <input type="text" id="api-key" name="api-key" class="field"  placeholder="Clave de administrador">
+        <input type="email" id="email" name="email" class="field"  placeholder="Email">
+        <br>
+        <select name="permisos" id="permisos" class="select-field">
+            <option value="a">Administrador</option>
+            <option value="a">Usuario</option>
+        </select>
+        <p>
+            <input type="submit" id="generar-key" name="generar-key" value="Crear y enviar" class="btn-submit">
+        </p>
+        {% if "ok" in request.url %}
+            <p><b>Compruebe su correo <b style="color: green">clave enviada</b></b></p>
+        {% endif %}
+        {% if "fail-send" in request.url %}
+            <p><b>Ya existe una clave con ese correo</b></p>
+        {% endif %}
+        {% if "fail-mail" in request.url %}
+                <p><b>Correo no válido</b></p>
+        {% endif %}
+        {% if "fail-key" in request.url %}
+                <p><b>Clave no válida</b></p>
+        {% endif %}
+    </form>
+    <div class="center-content">
+        <p class="justify">
+            La clave enviada es única y va asociada al correo electrónico introducido. Este correo solo puede tener asociada una clave. 
+        </p>
+        <p class="justify">
+            En caso de querer eliminar su clave y su correo revise el correo donde recibio la clave y haga click en eliminar. Cuando elimine su correo podrá crear otra clave con dicho correo
+        </p>
+        <br>
+        <p class="justify">
+            Si la clave creada es para usuarios solo es válida para peticiones tipo GET. En cambio, si la clave creada es para administrador será válida para peticiones tipo GET, POST, DELETE y PATCH. La clave puede ser usada tantas veces como quiera. Esta clave no tiene límite de peticiones al servidor.
+        </p>
+    </div>
+</div>
+<br>
+<br>
+{% endblock %}

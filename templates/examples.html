@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="pag-titulo">
+    <img src={{url_for('static', filename='images/code.png')}} alt="code">
+    Ejemplos
+</h1>
+<div class="code">
+    <h2>
+        <img src={{url_for('static', filename='images/python.png')}} alt="python" width="20">
+        Python
+    </h2>
+    <div class="code-block">
+        <span class="function">import </span><span class="module">request</span><br>
+        <span class="function">import </span><span class="module">json</span><br><br>
+        url = <span class="text">"http://127.0.0.1/api/titulos/T00001/"</span><br>
+        params = {<span class="text">"api_key"</span>:<span class="text">"SbKUVxbHLyv1aRveBboelaoq8XkHfG3IE9l8LYHUtcgXWYinCHQfF6iy7AfFJXKZ"</span>}<br>
+        r = requests.get(url, params=params)<br>
+        datos = json.loads(r.content)<br>
+        <span class="function">print</span>(datos)<br><br>
+        <span style="font-weight: bold;">Output:</span><br>
+        {<br>
+            &emsp;&emsp;"codigo":"T00001",<br>
+            &emsp;&emsp;"titulo":"Cadena perpetua",<br>
+            &emsp;&emsp;"anyo":1994,<br>
+            &emsp;&emsp;"valoracion":9.3,<br>
+            &emsp;&emsp;"director":"http://127.0.0.1:5000/api/personas/P0001/",<br>
+            &emsp;&emsp;"nominaciones":43,<br>
+            &emsp;&emsp;"premios":21,<br>
+            &emsp;&emsp;"duracion":"2h 22min"<br>
+            &emsp;&emsp;"ranking_peli":1<br>
+            &emsp;&emsp;"actores":[<br>
+            &emsp;&emsp;&emsp;&emsp;"http://127.0.0.1:5000/api/personas/P0002/",<br>
+            &emsp;&emsp;&emsp;&emsp;"http://127.0.0.1:5000/api/personas/P0003/",<br>
+            &emsp;&emsp;&emsp;&emsp;"http://127.0.0.1:5000/api/personas/P0004/"<br>
+            &emsp;&emsp;],<br>
+            &emsp;&emsp;"generos":[<br>
+            &emsp;&emsp;&emsp;&emsp;"http://127.0.0.1:5000/api/generos/G008/"<br>
+            &emsp;&emsp;],<br>
+            &emsp;&emsp;"tipo":"pelicula",<br>
+        }
+    </div>
+    <br>
+    <br>
+    <h2>
+        <img src={{url_for('static', filename='images/curl.png')}} alt="curl" width="20">
+        Curl
+    </h2>
+    <div class="code-block">
+        <span class="function-cmd">curl</span> <span class="opt-cmd">-X</span> GET http://127.0.0.1/api/titulos/T00001/?api_key=SbKUVxbHLyv1aRveBboelaoq8XkHfG3IE9l8LYHUtcgXWYinCHQfF6iy7AfFJXKZ<br><br>
+        <span style="font-weight: bold;">Output:</span><br>
+        {<br>
+            &emsp;&emsp;"codigo":"T00001",<br>
+            &emsp;&emsp;"titulo":"Cadena perpetua",<br>
+            &emsp;&emsp;"anyo":1994,<br>
+            &emsp;&emsp;"valoracion":9.3,<br>
+            &emsp;&emsp;"director":"http://127.0.0.1:5000/api/personas/P0001/",<br>
+            &emsp;&emsp;"nominaciones":43,<br>
+            &emsp;&emsp;"premios":21,<br>
+            &emsp;&emsp;"duracion":"2h 22min"<br>
+            &emsp;&emsp;"ranking_peli":1<br>
+            &emsp;&emsp;"actores":[<br>
+            &emsp;&emsp;&emsp;&emsp;"http://127.0.0.1:5000/api/personas/P0002/",<br>
+            &emsp;&emsp;&emsp;&emsp;"http://127.0.0.1:5000/api/personas/P0003/",<br>
+            &emsp;&emsp;&emsp;&emsp;"http://127.0.0.1:5000/api/personas/P0004/"<br>
+            &emsp;&emsp;],<br>
+            &emsp;&emsp;"generos":[<br>
+            &emsp;&emsp;&emsp;&emsp;"http://127.0.0.1:5000/api/generos/G008/"<br>
+            &emsp;&emsp;],<br>
+            &emsp;&emsp;"tipo":"pelicula",<br>
+        }
+    </div>
+</div>
+{% endblock %}

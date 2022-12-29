@@ -1,0 +1,43 @@
+{% extends "base.html" %}
+{% block content %}
+<h1 class="pag-titulo">
+    <img src={{url_for('static', filename='images/key.png')}} alt="key">
+    Obtener clave
+</h1>
+<div>
+    <form action="" method="POST" class="form-key">
+        <input type="email" id="email" name="email" class="field"  placeholder="Email">
+        <p>
+            <input type="submit" id="generar-key" name="generar-key" value="Enviar" class="btn-submit">
+        </p>
+        {% if "ok" in request.url %}
+            <p><b>Compruebe su correo <b style="color: green">clave enviada</b></b></p>
+        {% endif %}
+        {% if "fail-send" in request.url %}
+            <p><b>Ya existe una clave con ese correo</b></p>
+        {% endif %}
+        {% if "fail-mail" in request.url %}
+                <p><b>Correo no válido</b></p>
+        {% endif %}
+    </form>
+    <div class="center-content">
+        <p class="justify">
+            La clave que se le envia es única y va asociada al correo electrónico introducido. Este correo solo puede tener asociada una clave. 
+        </p>
+        <p class="justify">
+            En caso de querer eliminar su clave y su correo revise el correo donde recibio la clave y haga click en eliminar. Cuando elimine su correo podrá crear otra clave con dicho correo
+        </p>
+        <br>
+        <p class="justify">
+            La clave que se le envia es válida para peticiones tipo GET. La clave puede ser usada tantas veces como quiera. Esta clave no tiene límite de peticiones al servidor.
+        </p>
+        <p class="justify">
+            Para ver ejemplos de uso de esta API REST entre al apartado ejemplos o haga <a href={{url_for('examples')}} class="link-text">click aquí</a> o lease la documentación del apartado documentación o haga <a href={{url_for('documentation')}} class="link-text">click aquí</a>.
+        </p>
+        <br>
+        <br>
+        <br>
+        <br>
+    </div>
+</div>
+{% endblock %}
