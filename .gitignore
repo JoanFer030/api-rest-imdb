@@ -3,3 +3,6 @@ __pycache__/
 
 #ignore virt2
 virt2/
+
+#ignore .env
+*.env
