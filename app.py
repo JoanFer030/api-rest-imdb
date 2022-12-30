@@ -287,4 +287,4 @@ def genero(cod):
 
 
 if __name__ == "__main__":
-    app.run(debug=config("DEBUG", cast=bool))
+    app.run(debug=config("DEBUG", cast=bool), host="0.0.0.0")
