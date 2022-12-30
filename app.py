@@ -284,7 +284,3 @@ def genero(cod):
             return jsonify(data), status
     else:
         return jsonify({"estado":403, "mensaje": "La clave API no es válida"}), 403
-
-
-if __name__ == "__main__":
-    app.run(debug=config("DEBUG", cast=bool), host="0.0.0.0")
