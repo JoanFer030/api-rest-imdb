@@ -7,3 +7,4 @@ MarkupSafe==2.1.1
 psycopg2==2.9.5
 python-decouple==3.6
 Werkzeug==2.2.2
+Gunicorn
