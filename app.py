@@ -105,6 +105,10 @@ def admin():
             return redirect(url_for("admin")+"?fail-key")
     return render_template("admin.html")
 
+@app.errorhandler(404)
+def not_found(e):
+    return render_template("404.html"), 404
+
 # api - rutas
 @app.route("/api/")
 def rutas():
