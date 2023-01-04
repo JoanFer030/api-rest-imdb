@@ -114,16 +114,9 @@ def not_found(e):
 def rutas():
     url_root = request.url_root
     rutas_api = {
-        "obtener clave" : f"{url_root}api_key/",
-        "eliminar clave" : f"{url_root}eliminar_clave/?api_key=<clave>",
-        "titulos":f"{url_root}titulos/?api_key=<clave>",
-        "peliculas":f"{url_root}titulos/peliculas/?api_key=<clave>",
-        "series":f"{url_root}titulos/series/?api_key=<clave>",
-        "titulo":f"{url_root}titulos/<cod>/?api_key=<clave>",
-        "personas":f"{url_root}personas/?api_key=<clave>",
-        "persona":f"{url_root}personas/<cod>/?api_key=<clave>",
-        "generos":f"{url_root}generos/?api_key=<clave>",
-        "genero":f"{url_root}generos/<cod>/?api_key=<clave>",
+        "titulos":f"{url_root}titulos/",
+        "personas":f"{url_root}personas/",
+        "generos":f"{url_root}generos/",
     }
     return jsonify(rutas_api), 200
 
@@ -131,160 +124,233 @@ def rutas():
 @app.route("/api/eliminar_clave/", methods=["GET"])
 def eliminar_clave():
     api_key = request.args.get("api_key")
-    valid, auth = api_keys.is_valid(api_key)
     if api_key is None:
         return jsonify({"estado":400, "mensaje": "Por favor introduce un clave API"}), 400
-    elif valid:
-        data, status = api_keys.delete(api_key)
-        return jsonify(data), status
     else:
-        return jsonify({"estado":403, "mensaje": "La clave API no es válida"}), 403
+        valid, auth = api_keys.is_valid(api_key)
+        if valid:
+            data, status = api_keys.delete(api_key)
+            return jsonify(data), status
+        else:
+            return jsonify({"estado":403, "mensaje": "La clave API no es válida"}), 403
 
 # api - titulos
 @app.route("/api/titulos/", methods=["GET", "POST"])
 def titulos():
     api_key = request.args.get("api_key")
-    valid, auth = api_keys.is_valid(api_key)
     if api_key is None:
         return jsonify({"estado":400, "mensaje": "Por favor introduce un clave API"}), 400
-    elif valid:
-        if request.method == "POST" and auth == "a":
-            data, status = data_func.crear_titulo(request.get_json(force=True), request.url_root)
-            return jsonify(data), status
-        elif request.method == "POST" and auth != "a":
-            return jsonify({"estado":401, "mensaje": "La clave API no es válida para este procedimiento"}), 401
-        elif request.method == "GET":
-            data, status = data_func.titulos(request.url_root)
-            return jsonify(data), status
     else:
-        return jsonify({"estado":403, "mensaje": "La clave API no es válida"}), 403
+        valid, auth = api_keys.is_valid(api_key)
+        if valid:
+            if request.method == "POST" and auth == "a":
+                data, status = data_func.crear_titulo(request.get_json(force=True), request.url_root)
+                return jsonify(data), status
+            elif request.method == "POST" and auth != "a":
+                return jsonify({"estado":401, "mensaje": "La clave API no es válida para este procedimiento"}), 401
+            elif request.method == "GET":
+                data, status = data_func.titulos(request.url_root)
+                return jsonify(data), status
+        else:
+            return jsonify({"estado":403, "mensaje": "La clave API no es válida"}), 403
 
 # api - peliculas
 @app.route("/api/titulos/peliculas/", methods=["GET"])
 def peliculas():
     api_key = request.args.get("api_key")
-    valid, auth = api_keys.is_valid(api_key)
     if api_key is None:
         return jsonify({"estado":400, "mensaje": "Por favor introduce un clave API"}), 400
-    elif valid:
-        data, status = data_func.peliculas(request.url_root)
-        return jsonify(data), status
     else:
-        return jsonify({"estado":403, "mensaje": "La clave API no es válida"}), 403
+        valid, auth = api_keys.is_valid(api_key)
+        if valid:
+            data, status = data_func.peliculas(request.url_root)
+            return jsonify(data), status
+        else:
+            return jsonify({"estado":403, "mensaje": "La clave API no es válida"}), 403
 
 # api - series
 @app.route("/api/titulos/series/", methods=["GET"])
 def series():
     api_key = request.args.get("api_key")
-    valid, auth = api_keys.is_valid(api_key)
     if api_key is None:
         return jsonify({"estado":400, "mensaje": "Por favor introduce un clave API"}), 400
-    elif valid:
-        data, status = data_func.series(request.url_root)
-        return jsonify(data), status
     else:
-        return jsonify({"estado":403, "mensaje": "La clave API no es válida"}), 403
+        valid, auth = api_keys.is_valid(api_key)
+        if valid:
+            data, status = data_func.series(request.url_root)
+            return jsonify(data), status
+        else:
+            return jsonify({"estado":403, "mensaje": "La clave API no es válida"}), 403
 
 # api - un titulo
 @app.route("/api/titulos/<string:cod>/", methods=["GET", "DELETE", "PATCH"])
 def titulo(cod):
     api_key = request.args.get("api_key")
-    valid, auth = api_keys.is_valid(api_key)
     if api_key is None:
         return jsonify({"estado":400, "mensaje": "Por favor introduce un clave API"}), 400
-    elif valid:
-        if request.method == "DELETE" and auth == "a":
-            data, status = data_func.eliminar_titulo(cod)
-            return jsonify(data), status
-        elif request.method == "PATCH" and auth == "a":
-            data, status = data_func.actualizar_titulo(cod, request.get_json(force=True), request.url_root)
-            return jsonify(data), status
-        elif request.method in ["PATCH", "DELETE"] and auth != "a":
-            return jsonify({"estado":401, "mensaje": "La clave API no es válida para este procedimiento"}), 401
-        elif request.method == "GET":
-            data, status = data_func.titulo(cod, request.url_root)
-            return jsonify(data), status
     else:
-        return jsonify({"estado":403, "mensaje": "La clave API no es válida"}), 403
+        valid, auth = api_keys.is_valid(api_key)
+        if valid:
+            if request.method == "DELETE" and auth == "a":
+                data, status = data_func.eliminar_titulo(cod)
+                return jsonify(data), status
+            elif request.method == "PATCH" and auth == "a":
+                data, status = data_func.actualizar_titulo(cod, request.get_json(force=True), request.url_root)
+                return jsonify(data), status
+            elif request.method in ["PATCH", "DELETE"] and auth != "a":
+                return jsonify({"estado":401, "mensaje": "La clave API no es válida para este procedimiento"}), 401
+            elif request.method == "GET":
+                data, status = data_func.titulo(cod, request.url_root)
+                return jsonify(data), status
+        else:
+            return jsonify({"estado":403, "mensaje": "La clave API no es válida"}), 403
+
+# api - esquema peliculas
+@app.route("/api/titulos/peliculas/esquema/")
+def esquema_pelicula():
+    esq = {
+        "codigo": "string - Código que identifica cada título.",
+        "titulo": "string - El título de la película.",
+        "anyo": "int - Año de publicación de la película.",
+        "valoracion": "float - Valoración en IMDB de la película.",
+        "director": "string - URL vinculado a la persona que dirige la película.",
+        "nominaciones": "int - Número de nominaciones que tiene la película.",
+        "premios": "int - Número de premios que tiene la película.",
+        "duracion": "string - Duración de la película (ej. 1h 46min).",
+        "ranking_peli": "int - Posición en el top 250 películas en IMDB.",
+        "actores": "array - Lista de URLs vinculados a las personas que actuan en esta película.",
+        "generos": "array - Lista de URLs vinculados a las géneros en los que está clasificado esta película.",
+        "tipo": "string - Tipo de título (s: serie, p: película).",
+    }
+    return jsonify(esq), 200
+
+# api - esquema series
+@app.route("/api/titulos/series/esquema/")
+def esquema_serie():
+    esq = {
+        "codigo": "string - Código que identifica cada título.",
+        "titulo": "string - El título de la serie.",
+        "anyo": "int - Año de publicación de la serie.",
+        "valoracion": "float - Valoración en IMDB de la serie.",
+        "director": "string - URL vinculado a la persona que dirige la serie.",
+        "nominaciones": "int - Número de nominaciones que tiene la serie.",
+        "premios": "int - Número de premios que tiene la serie.",
+        "duracion_cap": "string - Duración de cada capítulo (ej. 46min).",
+        "ranking_series": "int - Posición en el top 250 series en IMDB.",
+        "episodios": "int - Número de capitulos que componen la serie",
+        "actores": "array - Lista de URLs vinculados a las personas que actuan en esta serie.",
+        "generos": "array - Lista de URLs vinculados a las géneros en los que está clasificado esta serie.",
+        "tipo": "string - Tipo de título (s: serie, p: película).",
+    }
+    return jsonify(esq), 200
 
 # api - personas
 @app.route("/api/personas/", methods=["GET", "POST"])
 def personas():
     api_key = request.args.get("api_key")
-    valid, auth = api_keys.is_valid(api_key)
     if api_key is None:
         return jsonify({"estado":400, "mensaje": "Por favor introduce un clave API"}), 400
-    elif valid:
-        if request.method == "POST" and auth == "a":
-            data, status = data_func.crear_persona(request.get_json(force=True), request.url_root)
-            return jsonify(data), status
-        elif request.method == "POST" and auth != "a":
-            return jsonify({"estado":401, "mensaje": "La clave API no es válida para este procedimiento"}), 401
-        elif request.method == "GET":
-            data, status = data_func.personas(request.url_root)
-            return jsonify(data), status
     else:
-        return jsonify({"estado":403, "mensaje": "La clave API no es válida"}), 403
+        valid, auth = api_keys.is_valid(api_key)
+        if valid:
+            if request.method == "POST" and auth == "a":
+                data, status = data_func.crear_persona(request.get_json(force=True), request.url_root)
+                return jsonify(data), status
+            elif request.method == "POST" and auth != "a":
+                return jsonify({"estado":401, "mensaje": "La clave API no es válida para este procedimiento"}), 401
+            elif request.method == "GET":
+                data, status = data_func.personas(request.url_root)
+                return jsonify(data), status
+        else:
+            return jsonify({"estado":403, "mensaje": "La clave API no es válida"}), 403
 
 # api - persona
 @app.route("/api/personas/<string:cod>/", methods=["GET", "DELETE", "PATCH"])
 def persona(cod):
     api_key = request.args.get("api_key")
-    valid, auth = api_keys.is_valid(api_key)
     if api_key is None:
         return jsonify({"estado":400, "mensaje": "Por favor introduce un clave API"}), 400
-    elif valid:
-        if request.method == "DELETE" and auth == "a":
-            data, status = data_func.eliminar_persona(cod)
-            return jsonify(data), status
-        elif request.method == "PATCH" and auth == "a":
-            data, status = data_func.actualizar_persona(cod, request.get_json(force=True), request.url_root)
-            return jsonify(data), status
-        elif request.method in ["PATCH", "DELETE"] and auth != "a":
-            return jsonify({"estado":401, "mensaje": "La clave API no es válida para este procedimiento"}), 401
-        elif request.method == "GET":
-            data, status = data_func.persona(cod, request.url_root)
-            return jsonify(data), status
     else:
-        return jsonify({"estado":403, "mensaje": "La clave API no es válida"}), 403
+        valid, auth = api_keys.is_valid(api_key)
+        if valid:
+            if request.method == "DELETE" and auth == "a":
+                data, status = data_func.eliminar_persona(cod)
+                return jsonify(data), status
+            elif request.method == "PATCH" and auth == "a":
+                data, status = data_func.actualizar_persona(cod, request.get_json(force=True), request.url_root)
+                return jsonify(data), status
+            elif request.method in ["PATCH", "DELETE"] and auth != "a":
+                return jsonify({"estado":401, "mensaje": "La clave API no es válida para este procedimiento"}), 401
+            elif request.method == "GET":
+                data, status = data_func.persona(cod, request.url_root)
+                return jsonify(data), status
+        else:
+            return jsonify({"estado":403, "mensaje": "La clave API no es válida"}), 403
+
+# api - esquema personas
+@app.route("/api/personas/esquema/")
+def esquema_persona():
+    esq = {
+        "codigo": "string - Código que identifica cada persona.",
+        "nombre": "string - El nombre de la persona.",
+        "fecha_nac": "string - Fecha de nacimiento de la persona en formato dd-mm-aaaa.",
+        "pais": "string - País de nacimiento de la persona.",
+        "nominaciones": "int - Número de nominaciones que tiene la persona.",
+        "premios": "int - Número de premios que tiene la persona.",
+        "actua": "array - Lista de URLs vinculados a los títulos en los que actua esta persona.",
+        "dirige": "array - Lista de URLs vinculados a los títulos dirigidos por esta persona.",
+    }
+    return jsonify(esq), 200
 
 # api - generos
 @app.route("/api/generos/", methods=["GET", "POST"])
 def generos():
     api_key = request.args.get("api_key")
-    valid, auth = api_keys.is_valid(api_key)
     if api_key is None:
         return jsonify({"estado":400, "mensaje": "Por favor introduce un clave API"}), 400
-    elif valid:
-        if request.method == "POST" and auth == "a":
-            data, status = data_func.crear_genero(request.get_json(force=True), request.url_root)
-            return jsonify(data), status
-        elif request.method == "POST" and auth != "a":
-            return jsonify({"estado":401, "mensaje": "La clave API no es válida para este procedimiento"}), 401
-        elif request.method == "GET":
-            data, status = data_func.generos(request.url_root)
-            return jsonify(data), status
     else:
-        return jsonify({"estado":403, "mensaje": "La clave API no es válida"}), 403
+        valid, auth = api_keys.is_valid(api_key)
+        if valid:
+            if request.method == "POST" and auth == "a":
+                data, status = data_func.crear_genero(request.get_json(force=True), request.url_root)
+                return jsonify(data), status
+            elif request.method == "POST" and auth != "a":
+                return jsonify({"estado":401, "mensaje": "La clave API no es válida para este procedimiento"}), 401
+            elif request.method == "GET":
+                data, status = data_func.generos(request.url_root)
+                return jsonify(data), status
+        else:
+            return jsonify({"estado":403, "mensaje": "La clave API no es válida"}), 403
 
 # api - genero
 @app.route("/api/generos/<string:cod>/", methods=["GET", "DELETE", "PATCH"])
 def genero(cod):
     api_key = request.args.get("api_key")
-    valid, auth = api_keys.is_valid(api_key)
     if api_key is None:
         return jsonify({"estado":400, "mensaje": "Por favor introduce un clave API"}), 400
-    elif valid:
-        if request.method == "DELETE" and auth == "a":
-            data, status = data_func.eliminar_genero(cod)
-            return jsonify(data), status
-        elif request.method == "PATCH" and auth == "a":
-            data, status = data_func.actualizar_genero(cod, request.get_json(force=True), request.url_root)
-            return jsonify(data), status
-        elif request.method in ["PATCH", "DELETE"] and auth != "a":
-            return jsonify({"estado":401, "mensaje": "La clave API no es válida para este procedimiento"}), 401
-        elif request.method == "GET":
-            data, status = data_func.genero(cod, request.url_root)
-            return jsonify(data), status
     else:
-        return jsonify({"estado":403, "mensaje": "La clave API no es válida"}), 403
+        valid, auth = api_keys.is_valid(api_key)
+        if valid:
+            if request.method == "DELETE" and auth == "a":
+                data, status = data_func.eliminar_genero(cod)
+                return jsonify(data), status
+            elif request.method == "PATCH" and auth == "a":
+                data, status = data_func.actualizar_genero(cod, request.get_json(force=True), request.url_root)
+                return jsonify(data), status
+            elif request.method in ["PATCH", "DELETE"] and auth != "a":
+                return jsonify({"estado":401, "mensaje": "La clave API no es válida para este procedimiento"}), 401
+            elif request.method == "GET":
+                data, status = data_func.genero(cod, request.url_root)
+                return jsonify(data), status
+        else:
+            return jsonify({"estado":403, "mensaje": "La clave API no es válida"}), 403
+
+# api - esquema generos
+@app.route("/api/generos/esquema/")
+def esquema_genero():
+    esq = {
+        "codigo": "string - Código que identifica cada género.",
+        "nombre": "string - El nombre del género.",
+        "titulos": "array - Lista de URLs vinculados a los títulos clasificados en este género.",
+    }
+    return jsonify(esq), 200

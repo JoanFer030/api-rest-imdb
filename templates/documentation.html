@@ -4,18 +4,437 @@
     <img src={{url_for('static', filename='images/text.png')}} alt="key">
     Documentación
 </h1>
-<div class="center-content" style="font-size: 14px;">
-    <p class="justify">
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Rerum earum atque, eos dignissimos similique repellendus qui, magnam quas velit omnis obcaecati reprehenderit, eaque possimus distinctio doloribus aspernatur et nam dolorum.
+<div class="center-content">
+    <h3>Introducción</h3>
+    <p class="justify-text">
+        Esta es la documentación de la API IMDB, esta API almacena el top 250 peliculas y top 250 series de IMDB. Esta documentación debería ayudar a entender el funcionamiento de esta API REST.
+        Esta API ha sido creada por dos estudiantes de Ciencia de Datos de la Universidad Politécnica de Valencia como parte de un trabajo de la asignatura Adquisición y transmisión de datos.
     </p>
-    <p class="justify">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste qui expedita aspernatur minus tenetur amet illo iure, temporibus odio, nemo veritatis, optio explicabo eaque assumenda! Omnis quas laudantium fugiat id?
+    <br>
+    <h3>Inicio</h3>
+    <p class="justify-text">
+        Comenzamos con la primera toma de contacto con la API. Primero de todo tenemos que obtener nuestra clave de la api, para ello haga click en <a class="link-text" href={{url_for('api_key')}}  style="font-size: 14px;">obtener clave</a>. 
+        Tras ello abra una terminal y use el comando curl (como en el <a class="link-text" href={{url_for('examples')}} style="font-size: 14px;">ejemplo</a>) o entre en <a class="link-text" href="https://httpie.io/app"  style="font-size: 14px;" target="_blank">httpie</a> e introduzca el link: 
     </p>
-    <p class="justify">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste qui expedita aspernatur minus tenetur amet illo iure, temporibus odio, nemo veritatis, optio explicabo eaque assumenda! Omnis quas laudantium fugiat id?
+    <div class="code-block">
+        https://api-atd.onrender.com/api/titulos/T00001/?api_key={su_clave}
+    </div>
+    <br>
+    <p class="justify-text">
+        Usando httpie, por ejemplo, obtendremos como resultado:
     </p>
-    <p class="justify">
-        Lorem, ipsum dolor sit amet consectetur adipisicing elit. Iste qui expedita aspernatur minus tenetur amet illo iure, temporibus odio, nemo veritatis, optio explicabo eaque assumenda! Omnis quas laudantium fugiat id?
+    <div class="code-block">
+        HTTP/1.1 200 OK (9 headers)<br>
+        {<br>
+        &emsp;&emsp;"codigo": "T00001",<br>
+        &emsp;&emsp;"titulo": "Cadena perpetua",<br>
+        &emsp;&emsp;"anyo": 1994,<br>
+        &emsp;&emsp;"valoracion": 9.3,<br>
+        &emsp;&emsp;"director": "https://api-atd.onrender.com/api/personas/P0001/",<br>
+        &emsp;&emsp;"nominaciones": 43,<br>
+        &emsp;&emsp;"premios": 21,<br>
+        &emsp;&emsp;"duracion": "2h 22min",<br>
+        &emsp;&emsp;"ranking_peli": 1,<br>
+        &emsp;&emsp;"actores": [<br>
+        &emsp;&emsp;&emsp;&emsp;"https://api-atd.onrender.com/api/personas/P0002/",<br>
+        &emsp;&emsp;&emsp;&emsp;"https://api-atd.onrender.com/api/personas/P0003/",<br>
+        &emsp;&emsp;&emsp;&emsp;"https://api-atd.onrender.com/api/personas/P0004/"<br>
+        &emsp;&emsp;],<br>
+        &emsp;&emsp;"generos": [<br>
+        &emsp;&emsp;&emsp;&emsp;"https://api-atd.onrender.com/api/generos/G008/"<br>
+        &emsp;&emsp;],<br>
+        &emsp;&emsp;"tipo": "pelicula"<br>
+        }<br>
+    </div>
+    <br>
+    <h3>Autentificación</h3>
+    <p class="justify-text">
+        Para el uso de esta API es necesario disponer de una clave, esta clave va vinculada a un correo electrónico. 
+        Para obtener una clave haga click en <a class="link-text" href={{url_for('api_key')}}  style="font-size: 14px;">obtener clave</a>. Con esta clave podrá acceder a todos los recursos disponibles en la API sin límite de peticiones. 
+        Con la clave generada en el apartado obtener clave solo podrá obtener datos (GET).
     </p>
+    <h3>Recursos</h3>
+    <ul>
+        <li class="resources-element">
+            <h4>Raíz</h4>
+            <p class="justify-text">
+                La raíz proporciona información sobre todos los recursos disponibles en la API.
+            </p>
+            <div class="code-block">
+                https://api-atd.onrender.com/api/
+            </div>
+            <p class="justify-text">
+                Ejemplo de respuesta:
+            </p>
+            <div class="code-block">
+                HTTP/1.1 200 OK (9 headers)<br>
+                {<br>
+                &emsp;&emsp;"titulos": "https://api-atd.onrender.com/api/titulos/",<br>
+                &emsp;&emsp;"personas": "https://api-atd.onrender.com/api/personas/",<br>
+                &emsp;&emsp;"generos": "https://api-atd.onrender.com/api/generos/"<br>
+                }<br>
+            </div>
+            <br>
+            <p class="justify-content" style="margin: 0; font-size: 14px;">
+                Atributos: 
+            </p>
+            <ul>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        titulos: string - La URL raíz para todos los recursos en títulos.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        personas: string - La URL raíz para todos los recursos en personas.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        generos: string - La URL raíz para todos los recursos en géneros.
+                    </p>
+                </li>
+            </ul>
+        </li>
+        <li class="resources-element">
+            <h4>Títulos</h4>
+            <p class="justify-text"  style="margin: 0;">
+                Son los recursos disponibles en títulos, se encuentran disponibles tanto las peliculas como las series.
+            </p>
+            <ul>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        /titulos/ - Todos los títulos, tanto películas como series.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        /titulos/peliculas/ - Todas las peliculas disponibles en peliculas.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        /titulos/series/ - Todas las peliculas disponibles en series.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        /titulos/:cod - Datos de un título en concreto.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        /titulos/peliculas/esquema/ - Esquema JSON de los recursos disponibles tipo película.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        /titulos/series/esquema/ - Esquema JSON de los recursos disponibles tipo serie.
+                    </p>
+                </li>
+            </ul>
+            <br>
+            <div class="code-block">
+                https://api-atd.onrender.com/api/titulos/T00001/?api_key={clave}
+            </div>
+            <p class="justify-text">
+                Ejemplo de respuesta:
+            </p>
+            <div class="code-block">
+                HTTP/1.1 200 OK (9 headers)<br>
+                {<br>
+                &emsp;&emsp;"codigo": "T00001",<br>
+                &emsp;&emsp;"titulo": "Cadena perpetua",<br>
+                &emsp;&emsp;"anyo": 1994,<br>
+                &emsp;&emsp;"valoracion": 9.3,<br>
+                &emsp;&emsp;"director": "https://api-atd.onrender.com/api/personas/P0001/",<br>
+                &emsp;&emsp;"nominaciones": 43,<br>
+                &emsp;&emsp;"premios": 21,<br>
+                &emsp;&emsp;"duracion": "2h 22min",<br>
+                &emsp;&emsp;"ranking_peli": 1,<br>
+                &emsp;&emsp;"actores": [<br>
+                &emsp;&emsp;&emsp;&emsp;"https://api-atd.onrender.com/api/personas/P0002/",<br>
+                &emsp;&emsp;&emsp;&emsp;"https://api-atd.onrender.com/api/personas/P0003/",<br>
+                &emsp;&emsp;&emsp;&emsp;"https://api-atd.onrender.com/api/personas/P0004/"<br>
+                &emsp;&emsp;],<br>
+                &emsp;&emsp;"generos": [<br>
+                &emsp;&emsp;&emsp;&emsp;"https://api-atd.onrender.com/api/generos/G008/"<br>
+                &emsp;&emsp;],<br>
+                &emsp;&emsp;&emsp;&emsp;"tipo": "pelicula"<br>
+                }<br>
+            </div>
+            <br>
+            <p class="justify-content" style="margin: 0; font-size: 14px;">
+                Atributos: 
+            </p>
+            <ul>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        codigo: string - Código que identifica cada título.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        titulo: string - El título de la película/serie.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        anyo: int - Año de publicación del título.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        valoracion: float - Valoración en IMDB del título.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        director: string - URL vinculado a la persona que dirige el título.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        nominaciones: int - Número de nominaciones que tiene el título.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        premios: int - Número de premios que tiene el título.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        duracion: string - Duración del título (ej. "1h 46min").
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        ranking_peli: int - Posición en el top 250 películas en IMDB.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        actores: array - Lista de URLs vinculados a las personas que actuan en este título.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        generos: array - Lista de URLs vinculados a las géneros en los que está clasificado este título.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        tipo: string - Tipo de título (s: serie, p: película).
+                    </p>
+                </li>
+            </ul>
+        </li>
+        <li class="resources-element">
+            <h4>Personas</h4>
+            <p class="justify-text" style="margin: 0;">
+                Son los recursos disponibles en personas, aquí se encuentran disponibles tanto actores como directores.
+            </p>
+            <ul>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        /personas/ - Todos los recursos disponibles en personas.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        /personas/:cod/ - Datos de una persona en concreto.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        /personas/esquema/ - Esquema JSON de los recursos disponibles en personas.
+                    </p>
+                </li>
+            </ul>
+            <br>
+            <div class="code-block">
+                https://api-atd.onrender.com/api/personas/P0001/?api_key={clave}
+            </div>
+            <p class="justify-text">
+                Ejemplo de respuesta:
+            </p>
+            <div class="code-block">
+                HTTP/1.1 200 OK (9 headers)<br>
+                {<br>
+                &emsp;&emsp;"codigo": "P0001",<br>
+                &emsp;&emsp;"nombre": "Frank Darabont",<br>
+                &emsp;&emsp;"fecha_nac": "28-01-1959",<br>
+                &emsp;&emsp;"pais": "Francia",<br>
+                &emsp;&emsp;"nominaciones": 30,<br>
+                &emsp;&emsp;"premios": 15,<br>
+                &emsp;&emsp;"actua": [],<br>
+                &emsp;&emsp;"dirige": [<br>
+                &emsp;&emsp;&emsp;&emsp;"https://api-atd.onrender.com/api/titulos/T00001/",<br>
+                &emsp;&emsp;&emsp;&emsp;"https://api-atd.onrender.com/api/titulos/T00027/"<br>
+                &emsp;&emsp;]<br>
+                }<br>
+            </div>
+            <br>
+            <p class="justify-content" style="margin: 0; font-size: 14px;">
+                Atributos: 
+            </p>
+            <ul>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        codigo: string - Código que identifica cada persona.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        nombre: string - El nombre de la persona.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        fecha_nac: string - Fecha de nacimiento de la persona en formato dd-mm-aaaa.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        pais: string - País de nacimiento de la persona.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        nominaciones: int - Número de nominaciones que tiene la persona.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        premios: int - Número de premios que tiene la persona.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        actua: array - Lista de URLs vinculados a los títulos en los que actua esta persona.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        dirige: array - Lista de URLs vinculados a los títulos dirigidos por esta persona.
+                    </p>
+                </li>
+            </ul>
+        </li>
+        <li class="resources-element">
+            <h4>Géneros</h4>
+            <p class="justify-text" style="margin: 0;">
+                Son los recursos disponibles en personas, aquí se encuentran disponibles tanto actores como directores.
+            </p>
+            <ul>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        /generos/ - Todos los recursos disponibles en géneros.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        /generos/:cod/ - Datos de un géneros en concreto.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        /generos/esquema/ - Esquema JSON de los recursos disponibles en géneros.
+                    </p>
+                </li>
+            </ul>
+            <br>
+            <div class="code-block">
+                https://api-atd.onrender.com/api/generos/G027/?api_key={clave}
+            </div>
+            <p class="justify-text">
+                Ejemplo de respuesta:
+            </p>
+            <div class="code-block">
+                HTTP/1.1 200 OK (9 headers)<br>
+                {<br>
+                &emsp;&emsp;"codigo": "G027",<br>
+                &emsp;&emsp;"nombre": "Antiguo Oeste",<br>
+                &emsp;&emsp;"titulos": [<br>
+                &emsp;&emsp;&emsp;&emsp;"https://api-atd.onrender.com/api/titulos/T00010/",<br>
+                &emsp;&emsp;&emsp;&emsp;"https://api-atd.onrender.com/api/titulos/T00048/",<br>
+                &emsp;&emsp;&emsp;&emsp;"https://api-atd.onrender.com/api/titulos/T00056/",<br>
+                &emsp;&emsp;&emsp;&emsp;"https://api-atd.onrender.com/api/titulos/T00125/",<br>
+                &emsp;&emsp;&emsp;&emsp;"https://api-atd.onrender.com/api/titulos/T00138/",<br>
+                &emsp;&emsp;&emsp;&emsp;"https://api-atd.onrender.com/api/titulos/T00145/",<br>
+                &emsp;&emsp;&emsp;&emsp;"https://api-atd.onrender.com/api/titulos/T00366/",<br>
+                &emsp;&emsp;&emsp;&emsp;"https://api-atd.onrender.com/api/titulos/T00389/",<br>
+                &emsp;&emsp;&emsp;&emsp;"https://api-atd.onrender.com/api/titulos/T00392/"<br>
+                &emsp;&emsp;]<br>
+                }<br>
+            </div>
+            <br>
+            <p class="justify-content" style="margin: 0; font-size: 14px;">
+                Atributos: 
+            </p>
+            <ul>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        codigo: string - Código que identifica cada género.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        nombre: string - El nombre del género.
+                    </p>
+                </li>
+                <li class="resources-element">
+                    <p class="justify-text" style="margin: 0;">
+                        titulos: array - Lista de URLs vinculados a los títulos clasificados en este género.
+                    </p>
+                </li>
+            </ul>
+        </li>
+    </ul>
+    <br>
+    <h3>Estados</h3>
+    <ul>
+        <li class="resources-element">
+            <p class="justify-content" style="margin: 0;">
+                200 OK - Todo ha ido de forma correcta. Recurso obtenido.
+            </p>
+        </li>
+        <li class="resources-element">
+            <p class="justify-content" style="margin: 0;">
+                201 Created - Todo ha ido de forma correcta. Recurso creado.
+            </p>
+        </li>
+        <li class="resources-element">
+            <p class="justify-content" style="margin: 0;">
+                202 Accepted - Todo ha ido de forma correcta. Recurso modificado o eliminado.
+            </p>
+        </li>
+        <li class="resources-element">
+            <p class="justify-content" style="margin: 0;">
+                400 Bad Request- Algo ha fallado. No se ha podido procesar la petición.
+            </p>
+        </li>
+        <li class="resources-element">
+            <p class="justify-content" style="margin: 0;">
+                401 Unauthorized - Algo ha fallado. Credenciales no válidas.
+            </p>
+        </li>
+        <li class="resources-element">
+            <p class="justify-content" style="margin: 0;">
+                403 Forbidden - Algo ha fallado. Petición entendida pero rechazada.
+            </p>
+        </li>
+        <li class="resources-element">
+            <p class="justify-content" style="margin: 0;">
+                404 Not Found - Algo ha fallado. No se ha podido encontrar el recurso.
+            </p>
+        </li>
+        <li class="resources-element">
+            <p class="justify-content" style="margin: 0;">
+                500 Internal Server Error - Algo fallo en el servidor. 
+            </p>
+        </li>
+    </ul>
 </div>
 {% endblock %}
