@@ -1,5 +1,4 @@
 from flask import Flask, jsonify, render_template, request, redirect, url_for
-from decouple import config
 import data_func
 import tools
 
@@ -94,7 +93,12 @@ def admin():
             to_mail = request.form.get("email")
             if len(to_mail) != 0 and "." in to_mail and "@" in to_mail:
                 if email.is_valid(to_mail):
-                    key = api_keys.create_apikey(to_mail, "a")
+                    perm = request.form.get("permisos")
+                    if perm == "a":
+                        perm = "a"
+                    else:
+                        perm = "u"
+                    key = api_keys.create_apikey(to_mail, perm)
                     email.send_email(to_mail, key, request.url_root)
                     return redirect(url_for("admin")+"?ok")
                 else:

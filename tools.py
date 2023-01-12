@@ -19,7 +19,7 @@ class Email:
             html = f.read()
         html = html.replace("-key-", key)
         html = html.replace("-ruta-", url_root)
-        ruta_eliminar = url_root + "/api/eliminar_clave/?api_key="
+        ruta_eliminar = url_root + "api/eliminar_clave/?api_key="
         html = html.replace("-ruta_eliminar-", ruta_eliminar)
         return html
 
